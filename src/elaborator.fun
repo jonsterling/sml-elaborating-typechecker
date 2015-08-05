@@ -17,17 +17,21 @@ struct
   fun trace tag M =
     TRACE (tag ^ ": " ^ E.toString M)
 
-  fun elab M =
-    let
-      val M = evalOpen M
-    in
-      elabByTerm M ORELSE elabByType M
-    end
+  fun elab M = elab' (evalOpen M)
 
-  and elabByTerm M =
+  and elab' M =
       case out M of
           `x => Assumption x
         | AX $ #[] => TrueRight
+        | LAM $ #[xE] =>
+          let
+            val (x, E) = unbind xE
+          in
+            ImpliesRight x THEN elab E
+          end
+        | INL $ #[M] => OrRight1 THEN elab M
+        | INR $ #[M] => OrRight2 THEN elab M
+        | PAIR $ #[M,N] => AndRight THENL [elab M, elab N]
         | AP $ #[R,N] =>
           let
             val z = Var.named "z"
@@ -67,18 +71,6 @@ struct
       in
         (Cut (z, A) THENL [elab R, ID]) goal
       end
-
-  and elabByType M (goal as H >> P) =
-      (case P.out P of
-           P.$ (IMP, #[A,B]) =>
-           let
-             val x = Var.named "ξ"
-             val Ex = AP $$ #[M, ``x]
-           in
-             ImpliesRight x THEN elab Ex
-           end
-         | _ => FAIL' "elabByType" M
-      ) goal
 
   and synthesizeType (H, M) =
       case out (evalOpen M) of
