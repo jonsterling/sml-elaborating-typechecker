@@ -1,7 +1,7 @@
-A proposition `P` is defined by its intention: what counts as a verification of
-that proposition; to know `P prop` is to have understood this intention, and to
-know `P ver` is to have fulfilled it (by constructing a verification object).
-To know `P true` is to have a plan to verify `P`.
+A proposition `P` is defined by its intention (i.e. what counts as a
+verification of that proposition); to know `P prop` is to have understood this
+intention, and to know `P ver` is to have fulfilled it (by constructing a
+verification object).  To know `P true` is to have a plan to verify `P`.
 
 We begin with a LCF-with-validations refiner; ephemerally, inferences in this
 refiner are derivations in the sequent calculus with cut, but the synthesis of
