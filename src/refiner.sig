@@ -2,6 +2,7 @@ signature REFINER =
 sig
   structure Lcf : LCF
     where type goal = Judgment.t
+    where type evidence = EvidenceAbt.t
 
   exception Refine of string
   exception Evidence of string
