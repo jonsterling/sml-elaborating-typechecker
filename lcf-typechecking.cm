@@ -25,7 +25,9 @@ Library
   functor Elaborator
   structure Elaborator
 
-  structure Test
+  signature TYPECHECKER
+  functor Typechecker
+  structure Typechecker
 is
   $libs/cmlib/cmlib.cm
   $libs/sml-abt/abt.cm
@@ -46,4 +48,5 @@ is
   src/small_step.sig
   src/small_step_util.fun
   src/small_step.sml
-  src/test.sml
+  src/typechecker.sig
+  src/typechecker.fun

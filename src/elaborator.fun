@@ -2,9 +2,14 @@ functor Elaborator (structure Refiner : REFINER and Evaluator : EVALUATOR) : ELA
 struct
   structure P = PropAbt and E = EvidenceAbt
   open Refiner Prop Evidence Judgment
-  open Tacticals Rules AdmissibleRules Evaluator
+  open Rules AdmissibleRules Evaluator
   infix THEN THENL ORELSE
   open E infix $ \ $$ \\ // >>
+
+  type term = EvidenceAbt.t
+
+  structure Tacticals = Tacticals (Refiner.Lcf)
+  open Tacticals
 
   fun FAIL' tag M _ =
     raise Fail (tag ^ ": " ^ E.toString M)

@@ -1,5 +1,6 @@
 functor Refiner (Evaluator : EVALUATOR) : REFINER =
 struct
+  structure Lcf = Lcf
   structure Tacticals = Tacticals (Lcf)
 
   open Judgment

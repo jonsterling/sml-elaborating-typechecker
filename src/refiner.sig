@@ -1,8 +1,7 @@
 signature REFINER =
 sig
-  structure Tacticals : TACTICALS
-     where type tactic = Lcf.tactic
-       and type goal = Lcf.goal
+  structure Lcf : LCF
+    where type goal = Judgment.t
 
   exception Refine of string
   exception Evidence of string

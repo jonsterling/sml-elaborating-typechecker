@@ -1,28 +1,3 @@
-Library
-  signature JUDGMENT
-  structure Var
-  structure Prop
-  structure PropAbt
-  structure Evidence
-  structure EvidenceAbt
-
-  structure Judgment
-  structure Lcf
-
-  signature REFINER
-  signature ELABORATOR
-  signature EVALUATOR
-  structure Evaluator
-
-  signature SMALL_STEP
-  signature SMALL_STEP_UTIL
-  functor SmallStepUtil
-  structure SmallStep
-
-  functor Refiner
-  structure Refiner
-
-
-  structure Test
-is
+Group is
   lcf-typechecking.cm (bind:(anchor:libs value:lib))
+  src/test.sml
