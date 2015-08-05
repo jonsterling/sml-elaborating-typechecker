@@ -1,0 +1,49 @@
+Library
+  signature JUDGMENT
+  structure Var
+  structure Prop
+  structure PropAbt
+  structure Evidence
+  structure EvidenceAbt
+
+  structure Judgment
+  structure Lcf
+
+  signature REFINER
+  signature ELABORATOR
+  signature EVALUATOR
+  structure Evaluator
+
+  signature SMALL_STEP
+  signature SMALL_STEP_UTIL
+  functor SmallStepUtil
+  structure SmallStep
+
+  functor Refiner
+  structure Refiner
+
+  functor Elaborator
+  structure Elaborator
+
+  structure Test
+is
+  $libs/cmlib/cmlib.cm
+  $libs/sml-abt/abt.cm
+  $libs/sml-lcf/lcf.cm
+  $libs/sml-telescopes/telescopes.cm
+  src/judgment.sig
+  src/var.sml
+  src/prop.sml
+  src/evidence.sml
+  src/judgment.sml
+  src/lcf.sml
+  src/refiner.sig
+  src/elaborator.sig
+  src/evaluator.sig
+  src/evaluator.sml
+  src/refiner.fun
+  src/elaborator.fun
+  src/small_step.sig
+  src/small_step_util.fun
+  src/small_step.sml
+  src/test.sml
