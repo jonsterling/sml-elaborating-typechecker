@@ -16,8 +16,15 @@ struct
   fun check (M, A) =
     let
       val script = Elaborator.elab M
-      val ([], validation) = COMPLETE script (Telescope.empty >> A)
+      val (subgoals, validation) =
+        TRY script (Telescope.empty >> A)
     in
-      validation []
+      if length subgoals > 0 then
+        (print
+          ("\nRemaining subgoals:\n\n" ^
+           foldl (fn (g,r) => r ^ "\n" ^ Sequent.toString g ^ "\n") "" subgoals ^ "\n");
+         raise Fail "Refinement failed")
+      else
+        validation []
     end
 end
