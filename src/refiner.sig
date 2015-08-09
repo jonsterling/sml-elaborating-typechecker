@@ -1,28 +1,34 @@
 signature REFINER =
 sig
+  structure Sequent : SEQUENT
+  structure Verification : ABT_UTIL
+
   structure Lcf : LCF
-    where type goal = Judgment.t
-    where type evidence = EvidenceAbt.t
+    where type goal = Sequent.t
+    where type evidence = Verification.t
+
+  type name = Sequent.name
+  type rule = Lcf.tactic
 
   exception Refine of string
   exception Evidence of string
 
   structure Rules :
   sig
-    val Assumption : Var.t -> Lcf.tactic
-    val ImpliesRight : Var.t -> Lcf.tactic
-    val ImpliesLeft : Var.t -> Var.t -> Lcf.tactic
-    val OrRight1 : Lcf.tactic
-    val OrRight2 : Lcf.tactic
-    val OrLeft : Var.t -> Var.t * Var.t -> Lcf.tactic
-    val TrueRight : Lcf.tactic
-    val AndRight : Lcf.tactic
-    val AndLeft : Var.t -> Var.t * Var.t -> Lcf.tactic
+    val Assumption : name -> rule
+    val ImpliesRight : name -> rule
+    val ImpliesLeft : name -> name -> rule
+    val OrRight1 : rule
+    val OrRight2 : rule
+    val OrLeft : name -> name * name -> rule
+    val TrueRight : rule
+    val AndRight : rule
+    val AndLeft : name -> name * name -> rule
   end
 
   structure AdmissibleRules :
   sig
-    val Cut : Var.t * Judgment.prop -> Lcf.tactic
+    val Cut : name * Sequent.prop -> rule
   end
 end
 

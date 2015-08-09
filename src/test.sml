@@ -31,5 +31,5 @@ struct
   end
 
   val proof = Typechecker.check (term, prop)
-  val _ = print (EvidenceAbt.toString term ^ " ▹ " ^ EvidenceAbt.toString proof ^ " : " ^ PropAbt.toString prop ^ "\n")
+  val _ = print (EvidenceAbt.toString term ^ " ▹ " ^ Refiner.Verification.toString proof ^ " : " ^ PropAbt.toString prop ^ "\n")
 end

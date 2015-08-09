@@ -1,9 +1,12 @@
-functor Refiner (Evaluator : EVALUATOR) :> REFINER =
+functor Refiner (Evaluator : EVALUATOR where type term = EvidenceAbt.t) : REFINER =
 struct
   structure Lcf = Lcf
   structure Tacticals = Tacticals (Lcf)
 
-  open Judgment
+  structure Sequent = Sequent
+  structure Verification = EvidenceAbt
+
+  open Sequent
   infix >>
 
   exception Evidence of string
@@ -11,6 +14,9 @@ struct
 
   open Prop Evidence
   structure P = PropAbt and E = EvidenceAbt and T = Telescope
+
+  type name = EvidenceAbt.Variable.t
+  type rule = Lcf.tactic
 
   structure Rules =
   struct

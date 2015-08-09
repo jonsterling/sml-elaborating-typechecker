@@ -1,0 +1,26 @@
+Library
+  signature SMALL_STEP
+  signature SMALL_STEP_UTIL
+  functor SmallStepUtil
+
+  signature EVALUATOR
+  functor SmallStepEvaluator
+
+  signature SEQUENT
+
+  signature ELABORATOR
+  signature TYPECHECKER
+  functor Typechecker
+is
+  $/basis.cm
+  $libs/sml-lcf/lcf.cm
+  $libs/sml-abt/abt.cm
+  $libs/sml-telescopes/telescopes.cm
+  small_step.sig
+  small_step_util.fun
+  evaluator.sig
+  evaluator.fun
+  sequent.sig
+  elaborator.sig
+  typechecker.sig
+  typechecker.fun

@@ -15,4 +15,4 @@ struct
     | toString OR = "or"
 end
 
-structure PropAbt = AbtUtil (Abt (structure Variable = Var and Operator = Prop))
+structure PropAbt = AbtUtil (Abt (structure Variable = Variable and Operator = Prop))

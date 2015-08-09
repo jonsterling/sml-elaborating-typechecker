@@ -1,22 +1,15 @@
 Library
-  signature JUDGMENT
-  structure Var
   structure Prop
   structure PropAbt
   structure Evidence
   structure EvidenceAbt
 
-  structure Judgment
+  structure Sequent
   structure Lcf
 
   signature REFINER
-  signature ELABORATOR
-  signature EVALUATOR
   structure Evaluator
 
-  signature SMALL_STEP
-  signature SMALL_STEP_UTIL
-  functor SmallStepUtil
   structure SmallStep
 
   functor Refiner
@@ -25,28 +18,22 @@ Library
   functor Elaborator
   structure Elaborator
 
-  signature TYPECHECKER
-  functor Typechecker
   structure Typechecker
 is
   $libs/cmlib/cmlib.cm
   $libs/sml-abt/abt.cm
   $libs/sml-lcf/lcf.cm
   $libs/sml-telescopes/telescopes.cm
-  src/judgment.sig
-  src/var.sml
+  kit/kit.cm
+
+  src/sequent.sml
+  src/variable.sml
   src/prop.sml
   src/evidence.sml
-  src/judgment.sml
   src/lcf.sml
   src/refiner.sig
-  src/elaborator.sig
-  src/evaluator.sig
   src/evaluator.sml
   src/refiner.fun
   src/elaborator.fun
-  src/small_step.sig
-  src/small_step_util.fun
   src/small_step.sml
-  src/typechecker.sig
-  src/typechecker.fun
+  src/typechecker.sml

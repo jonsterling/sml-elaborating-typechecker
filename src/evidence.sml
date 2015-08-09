@@ -25,4 +25,4 @@ struct
     | toString SND = "snd"
 end
 
-structure EvidenceAbt = AbtUtil (Abt (structure Variable = Var and Operator = Evidence))
+structure EvidenceAbt = AbtUtil (Abt (structure Variable = Variable and Operator = Evidence))

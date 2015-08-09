@@ -1,11 +1,8 @@
-structure Judgment :
-sig
-  include JUDGMENT
-  structure Telescope : TELESCOPE
-end =
+structure Sequent : SEQUENT =
 struct
-  structure Telescope = Telescope (Var)
+  structure Telescope = Telescope (Variable)
   type prop = PropAbt.t
+  type name = Telescope.label
 
   type context = prop Telescope.telescope
   datatype t = >> of context * prop

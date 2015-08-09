@@ -1,12 +1,18 @@
-functor Elaborator (structure Refiner : REFINER and Evaluator : EVALUATOR) : ELABORATOR =
+functor Elaborator
+  (structure Refiner : REFINER
+     where type Sequent.Telescope.Label.t = EvidenceAbt.Variable.t
+     where type Sequent.prop = PropAbt.t
+   structure Evaluator : EVALUATOR
+     where type term = EvidenceAbt.t) : ELABORATOR =
 struct
   structure P = PropAbt and E = EvidenceAbt
-  open Refiner Prop Evidence Judgment
-  open Rules AdmissibleRules Evaluator
+  open Refiner Prop Evidence
+  open Rules AdmissibleRules Evaluator Sequent
   infix THEN THENL ORELSE
   open E infix $ \ $$ \\ // >>
 
   type term = EvidenceAbt.t
+  type tactic = Lcf.tactic
 
   structure Tacticals = Tacticals (Refiner.Lcf)
   open Tacticals
@@ -28,30 +34,30 @@ struct
         | PAIR $ #[M,N] => AndRight THENL [elab M, elab N]
         | AP $ #[R,N] =>
           let
-            val z = Var.named "z"
-            val x = Var.named "x"
+            val z = Variable.named "z"
+            val x = Variable.named "x"
           in
             elimRule (z, R) THEN ImpliesLeft z x THENL [elab N, Assumption x]
           end
         | FST $ #[R] =>
           let
-            val z = Var.named "z"
-            val s = Var.named "s"
-            val t = Var.named "t"
+            val z = Variable.named "z"
+            val s = Variable.named "s"
+            val t = Variable.named "t"
           in
             elimRule (z, R) THEN AndLeft z (s, t) THEN Assumption s
           end
         | SND $ #[R] =>
           let
-            val z = Var.named "z"
-            val s = Var.named "s"
-            val t = Var.named "t"
+            val z = Variable.named "z"
+            val s = Variable.named "s"
+            val t = Variable.named "t"
           in
             elimRule (z, R) THEN AndLeft z (s, t) THEN Assumption t
           end
         | DECIDE $ #[R, xE, yF] =>
           let
-            val z = Var.named "z"
+            val z = Variable.named "z"
             val (x, E) = unbind xE
             val (y, F) = unbind yF
           in

@@ -6,8 +6,8 @@ struct
   type tactic = goal -> goal list * validation
 end
 
-functor Lcf (J : JUDGMENT) : LCF =
+functor Lcf (J : SEQUENT) : LCF =
   MkLcf (type judgment = J.t and evidence = EvidenceAbt.t)
 
-structure Lcf = Lcf (Judgment)
+structure Lcf = Lcf (Sequent)
 
