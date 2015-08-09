@@ -11,12 +11,6 @@ struct
   structure Tacticals = Tacticals (Refiner.Lcf)
   open Tacticals
 
-  fun FAIL' tag M _ =
-    raise Fail (tag ^ ": " ^ E.toString M)
-
-  fun trace tag M =
-    TRACE (tag ^ ": " ^ E.toString M)
-
   fun elab M = elab' (evalOpen M)
 
   and elab' M =
@@ -63,7 +57,7 @@ struct
           in
             elimRule (z, R) THEN OrLeft z (x, y) THENL [elab E, elab F]
           end
-        | _ => FAIL' "elabByTerm" M
+        | _ => FAIL
 
   and elimRule (z, R) (goal as H >> P) =
       let
@@ -92,12 +86,6 @@ struct
             val P.$ (AND, #[P,Q]) = P.out (synthesizeType (H, R))
           in
             Q
-          end
-        | DECIDE $ #[R, xE, yF] =>
-          let
-            val P.$ (OR, #[P,Q]) = P.out (synthesizeType (H, R))
-          in
-            raise Fail ""
           end
         | _ => raise Fail "Cannot synthesize type"
 
