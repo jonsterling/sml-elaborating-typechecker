@@ -26,7 +26,6 @@ struct
     fun ImpliesRight x (H >> implication) =
       let
         val P.$ (IMPLIES, #[P, Q]) = P.out implication
-        val x = Telescope.fresh (H, x)
         val H' = Telescope.snoc H (x, P)
       in
         ([H' >> Q], fn [D] => E.$$ (LAM, #[E.\\ (x, D)])
@@ -36,7 +35,6 @@ struct
     fun ImpliesLeft z x (goal as H >> C) =
       let
         val P.$ (IMP, #[P, Q]) = P.out (Telescope.lookup H z)
-        val x = Telescope.fresh (H, x)
         val H' = Telescope.interposeAfter H (z, Telescope.snoc Telescope.empty (x, Q))
       in
         ([H >> P, H' >> C],
@@ -63,8 +61,6 @@ struct
     fun AndLeft z (s,t) (H >> C) =
       let
         val P.$ (AND, #[P,Q]) = P.out (Telescope.lookup H z)
-        val s = Telescope.fresh (H, s)
-        val t = Telescope.fresh (H, t)
         val H' = Telescope.interposeAfter H (z, Telescope.snoc (Telescope.snoc Telescope.empty (s, P)) (t, Q))
       in
         ([H' >> C], fn [D] => E.subst (E.$$ (FST, #[E.``z])) s (E.subst (E.$$ (SND, #[E.``z])) t D)
